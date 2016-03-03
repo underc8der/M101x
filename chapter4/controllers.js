@@ -127,10 +127,16 @@ exports.ProductDetailsController = function($scope, $routeParams, $http) {
 };
 
 exports.SearchBarController = function($scope, $http) {
+  var encoded = encodeURIComponent($scope.searchText);
   // TODO: this function should make an HTTP request to
   // `/api/v1/product/text/:searchText` and expose the response's
   // `products` property as `results` to the scope.
   $scope.update = function() {
+    var encoded = encodeURIComponent($scope.searchText);
+    $http.get('/api/v1/product/text/' + encoded).
+    success(function(data){
+      $scope.results = data.products;
+    });
   };
 
   setTimeout(function() {
